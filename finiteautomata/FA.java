@@ -1,8 +1,4 @@
 // package finiteautomata;
-
-
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.*;
 
 public class FA {
@@ -11,14 +7,19 @@ public class FA {
     Map<String, String[][]> transitionFunction;
     String start;
     ArrayList<String> accept;
+    HashMap<ArrayList<String>, ArrayList<String>> table;
 
     FA (ArrayList<String> statesList, ArrayList<String> alphabetList, Map<String,String[][]> statesTransitions,
             String startState, ArrayList<String> acceptStates) {
         states = statesList;
         alphabet = alphabetList;
+        if (this.getClass() == NFA.class) {
+            alphabet.add("lambda");
+        }
         transitionFunction = statesTransitions;
         start = startState;
         accept = acceptStates;
+        table = this.stateTransitionTableMaker();
 
     }
 
@@ -65,14 +66,17 @@ public class FA {
         return true;
     }
 
-    public HashMap<String[], ArrayList<String>> stateTransitionTableMaker() {
-        HashMap<String[], ArrayList<String>> table = new HashMap<String[], ArrayList<String>>();
+    public HashMap<ArrayList<String>, ArrayList<String>> stateTransitionTableMaker() {
+        HashMap<ArrayList<String>, ArrayList<String>> table = new HashMap<ArrayList<String>, ArrayList<String>>();
         for (String state : this.states) {
             HashMap<String, ArrayList<String>> transitions = this.transitionDict(state);
             for (String posInput : this.alphabet) {
-                String[] key = new String[] { state, posInput };
+                ArrayList<String> key = new ArrayList<String>(Arrays.asList(state,posInput));
                 table.put(key, new ArrayList<String>());
                 ArrayList<String> transList = table.get(key);
+                if (posInput.equals("lambda")) {
+                    transList.add(state);
+                }
                 Iterator transitionsIterator = transitions.entrySet().iterator();
                 while (transitionsIterator.hasNext()) {
                     Map.Entry transition = (Map.Entry) transitionsIterator.next();
@@ -141,15 +145,48 @@ public class FA {
         //System.out.println(NFA1.alphabet);
         //System.out.println(!NFA1.isEmpty());
         //System.out.println(NFA1.isAcceptedString("10101010101100010101001010"));
-        Iterator transitionsIterator = NFA1.stateTransitionTableMaker().entrySet().iterator();
+        Iterator transitionsIterator = NFA1.table.entrySet().iterator();
         while (transitionsIterator.hasNext()) {
             Map.Entry transition = (Map.Entry) transitionsIterator.next();
-            System.out.println(Arrays.toString((String[]) transition.getKey()) + ": " + transition.getValue());
+            System.out.println(transition.getKey() + ": " + transition.getValue());
         }
+        NFA1.convertToDFA();
+    }
+
+    public static void NFA2() {
+        System.out.println("\nNFA2:");
+        ArrayList<String> statesNFA2 = new ArrayList<String>(Arrays.asList("A", "B", "C", "D", "E"));
+        ArrayList<String> alphabetNFA2 = new ArrayList<String>(Arrays.asList("0", "1"));
+        Map<String, String[][]> stNFA2 = new HashMap<>();
+        stNFA2.put("A", new String[][] {{"0", "B"}});
+        stNFA2.put("B", new String[][] {{"0", "C"}});
+        stNFA2.put("C", new String[][] {{"0", "C"},{"1", "C"},{"0", "D"}});
+        stNFA2.put("D", new String[][] {{"1", "E"}});
+        stNFA2.put("E", new String[][] {{"lambda", "A"}});
+        String startNFA2 = "A";
+        ArrayList<String> acceptNFA2 = new ArrayList<String>(Arrays.asList("E"));
+
+        NFA NFA2 = new NFA(statesNFA2, alphabetNFA2, stNFA2, startNFA2, acceptNFA2);
+        // Iterator transitionsIterator = NFA2.table.entrySet().iterator();
+        // while (transitionsIterator.hasNext()) {
+        //     Map.Entry transition = (Map.Entry) transitionsIterator.next();
+        //     System.out.println(transition.getKey() + ": " + transition.getValue());
+        // }
+        HashMap<ArrayList<String>, ArrayList<String>> emptyTable = new HashMap<ArrayList<String>, ArrayList<String>>();
+        HashMap<ArrayList<String>, ArrayList<String>> newDfaTable2 = NFA2.dfaTableMaker(emptyTable, NFA2.getLambdaStatesAsString(NFA2.start));
+        for (ArrayList<String> key: newDfaTable2.keySet()) {
+            System.out.println(key + ": " + newDfaTable2.get(key));
+        }
+        // Iterator transitionsIterator = newDfaTable2.entrySet().iterator();
+        // while (transitionsIterator.hasNext()) {
+        //     Map.Entry transition = (Map.Entry) transitionsIterator.next();
+        //     System.out.println(transition.getKey() + ": " + transition.getValue());
+        // }
     }
 
     public static void main(String[] args) throws InterruptedException {
-        DFA1();
-        NFA1();
+        //DFA1();
+        //NFA1();
+        NFA2();
     }
 }
