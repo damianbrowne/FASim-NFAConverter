@@ -163,22 +163,6 @@ public class FA {
         ArrayList<String> acceptNFA2 = new ArrayList<String>(Arrays.asList("E"));
 
         NFA NFA2 = new NFA(statesNFA2, alphabetNFA2, stNFA2, startNFA2, acceptNFA2);
-        // Iterator transitionsIterator = NFA2.table.entrySet().iterator();
-        // while (transitionsIterator.hasNext()) {
-        //     Map.Entry transition = (Map.Entry) transitionsIterator.next();
-        //     System.out.println(transition.getKey() + ": " + transition.getValue());
-        // }
-        // HashMap<ArrayList<String>, ArrayList<String>> emptyTable = new HashMap<ArrayList<String>, ArrayList<String>>();
-
-        // HashMap<ArrayList<String>, ArrayList<String>> newDfaTable2 = NFA2.dfaTableMaker(emptyTable, new ArrayList<String>(Arrays.asList(NFA2.getLambdaStatesAsString(NFA2.start))));
-        // for (ArrayList<String> key: newDfaTable2.keySet()) {
-        //     System.out.println(key + ": " + newDfaTable2.get(key));
-        // }
-        // Iterator transitionsIterator = newDfaTable2.entrySet().iterator();
-        // while (transitionsIterator.hasNext()) {
-        //     Map.Entry transition = (Map.Entry) transitionsIterator.next();
-        //     System.out.println(transition.getKey() + ": " + transition.getValue());
-        // }
         DFA convertedDFA2 = NFA2.convertToDFA();
         for (ArrayList<String> key : convertedDFA2.table.keySet()) {
             System.out.println(key + ": " + convertedDFA2.table.get(key));
