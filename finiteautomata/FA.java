@@ -24,15 +24,11 @@ public class FA {
     }
 
     public boolean isValidStateFormat() {
-        if (states.contains("Dead")) {
-            System.out.println("ERR: 'Dead' is a reserved state name. Please define a different name.");
-            return false;
-        }
         for (String state: this.states) {
             if (!Character.isUpperCase(state.charAt(0))) { return false; }
-            for (int i = 1; i < state.length(); i++) {
-                if (Character.isUpperCase(state.charAt(i))) { return false; }
-            }
+            // for (int i = 1; i < state.length(); i++) {
+            //     if (Character.isUpperCase(state.charAt(i))) { return false; }
+            // }
         }
         return true;
     }
@@ -172,16 +168,23 @@ public class FA {
         //     Map.Entry transition = (Map.Entry) transitionsIterator.next();
         //     System.out.println(transition.getKey() + ": " + transition.getValue());
         // }
-        HashMap<ArrayList<String>, ArrayList<String>> emptyTable = new HashMap<ArrayList<String>, ArrayList<String>>();
-        HashMap<ArrayList<String>, ArrayList<String>> newDfaTable2 = NFA2.dfaTableMaker(emptyTable, NFA2.getLambdaStatesAsString(NFA2.start));
-        for (ArrayList<String> key: newDfaTable2.keySet()) {
-            System.out.println(key + ": " + newDfaTable2.get(key));
-        }
+        // HashMap<ArrayList<String>, ArrayList<String>> emptyTable = new HashMap<ArrayList<String>, ArrayList<String>>();
+
+        // HashMap<ArrayList<String>, ArrayList<String>> newDfaTable2 = NFA2.dfaTableMaker(emptyTable, new ArrayList<String>(Arrays.asList(NFA2.getLambdaStatesAsString(NFA2.start))));
+        // for (ArrayList<String> key: newDfaTable2.keySet()) {
+        //     System.out.println(key + ": " + newDfaTable2.get(key));
+        // }
         // Iterator transitionsIterator = newDfaTable2.entrySet().iterator();
         // while (transitionsIterator.hasNext()) {
         //     Map.Entry transition = (Map.Entry) transitionsIterator.next();
         //     System.out.println(transition.getKey() + ": " + transition.getValue());
         // }
+        DFA convertedDFA2 = NFA2.convertToDFA();
+        for (ArrayList<String> key : convertedDFA2.table.keySet()) {
+            System.out.println(key + ": " + convertedDFA2.table.get(key));
+        }
+        System.out.println(convertedDFA2.isAcceptedString("0011111000101"));
+        System.out.println(convertedDFA2.accept);
     }
 
     public static void main(String[] args) throws InterruptedException {
