@@ -2,7 +2,7 @@
 Simulates Deterministic and Non-Deterministic Finite Automata and can convert NFAs to DFAs. You can query both DFAs and NFAs with strings.
 
 \
-Both DFAs and NFAs are constructed with the same following parameters:
+Both DFAs and NFAs are constructed with the following parameters:
 
 ```List<String> alphabet```:                      a List of strings containing the symbols in the language's alphabet
   
