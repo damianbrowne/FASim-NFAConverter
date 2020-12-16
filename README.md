@@ -1,7 +1,7 @@
 # Finite Automata Sim and NFA -> DFA Converter
 Simulates Deterministic and Non-Deterministic Finite Automata and can convert NFAs to DFAs. You can query both DFAs and NFAs with strings.
 
-\Both DFAs and NFAs are constructed with the same following parameters:
+\ Both DFAs and NFAs are constructed with the same following parameters:
 
 ```List<String> alphabet```:                      a List of strings containing the symbols in the language's alphabet
   
@@ -12,12 +12,12 @@ Simulates Deterministic and Non-Deterministic Finite Automata and can convert NF
 ```List<String> accept```:                        a List containing the names of the accept states of the FA
 
 
-\Both DFAs and NFAs can be queried with a string using the syntax:
+\ Both DFAs and NFAs can be queried with a string using the syntax:
 ```
 nfaOrDfa.isAcceptedString(query);
 ```
 
-\NFAs can be converted to DFAs using the syntax:
+\ NFAs can be converted to DFAs using the syntax:
 ```
 DFA newConvertedDfa = nfa.convertToDFA();
 ```
