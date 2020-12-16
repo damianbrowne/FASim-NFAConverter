@@ -12,7 +12,7 @@ Both DFAs and NFAs are constructed with the same following parameters:
 ```List<String> accept```:                        a List containing the names of the accept states of the FA
   
   
-  
+\
 Both DFAs and NFAs can be queried with a string using the syntax:
 ```
 nfaOrDfa.isAcceptedString(query);
