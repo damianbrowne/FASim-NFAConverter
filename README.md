@@ -55,7 +55,7 @@ Testing query strings on both FAs using JUnit:
 for (Fa fa: new FA[] {nfaEndingInZero, dfaEndingInZero}) {
     assertTrue(fa.isAcceptedString("111001010"));
     assertTrue(fa.isAcceptedString("10"));
-    assertTrue(!fa.isAcceptedString("111"));
-    assertTrue(!fa.isAcceptedString("empty"));
-    assertTrue(!fa.isAcceptedString("lambda"));
+    assertFalse(fa.isAcceptedString("111"));
+    assertFalse(fa.isAcceptedString("empty"));
+    assertFalse(fa.isAcceptedString("lambda"));
 ```
